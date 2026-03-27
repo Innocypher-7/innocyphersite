@@ -1,70 +1,68 @@
-# Getting Started with Create React App
+# Innocypher — marketing site
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Static marketing and landing experience for **Innocypher**, built with [Create React App](https://github.com/facebook/create-react-app). Production output is a client-side SPA served as static files from the `build` directory.
 
-## Available Scripts
+## Stack
 
-In the project directory, you can run:
+- React 19, `react-scripts` (CRA)
+- Tailwind CSS
+- [lucide-react](https://lucide.dev/) icons
+- [Testing Library](https://testing-library.com/) for smoke tests
 
-### `npm start`
+## Prerequisites
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Node.js LTS (see `engines` in [`package.json`](package.json))
+- npm
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Local development
 
-### `npm test`
+```bash
+npm install
+npm start
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Open [http://localhost:3000](http://localhost:3000). The dev server reloads on file changes.
 
-### `npm run build`
+## Scripts
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+| Command | Purpose |
+| --- | --- |
+| `npm start` | Dev server |
+| `npm run build` | Production build → `build/` |
+| `npm test` | Tests (interactive locally; CI uses `--watchAll=false`) |
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Production build and `PUBLIC_URL`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+This repo is a **GitHub Pages project site** (live URL is `https://<owner>.github.io/<repo>/` until you attach a custom domain). Create React App must know that base path at **build time**, or asset URLs will be wrong.
 
-### `npm run eject`
+- **CI and deploy workflows** set `PUBLIC_URL` automatically: if the repository variable `PUBLIC_URL` is set, it is used; otherwise the default GitHub Pages URL for this repo is used (`https://<owner>.github.io/<repo>/`).
+- **Custom domain:** set a [GitHub Actions variable](https://docs.github.com/en/actions/learn-github-actions/variables#creating-configuration-variables-for-a-repository) named `PUBLIC_URL` to your canonical site URL, including a trailing slash, for example `https://www.example.com/`. Keep this in sync with the hostname in [`public/CNAME`](public/CNAME) and with **Settings → Pages → Custom domain** for this repository.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Local production checks:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+set PUBLIC_URL=https://your-owner.github.io/your-repo/
+npm run build
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+(On Unix, use `export PUBLIC_URL=...`.)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Deployment (GitHub Actions + GitHub Pages)
 
-## Learn More
+1. In the GitHub repository, enable **Settings → Pages**.
+2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
+3. Pushes to `main` run [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml), which builds the site and publishes it with the official Pages actions.
+4. **Custom domain:** add the domain under Pages settings, complete DNS at your registrar (A / CNAME records as required), and enable HTTPS when GitHub allows it. See [Configuring a custom domain for GitHub Pages](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site).
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Pull requests and pushes also run [`.github/workflows/ci.yml`](.github/workflows/ci.yml) (tests + build).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Project layout
 
-### Code Splitting
+- `src/InnoSite.jsx` — main page composition
+- `src/config.js` — copy, navigation, and content configuration
+- `public/` — static assets and `CNAME` for Pages custom hostname
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Learn more
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started)
+- [React documentation](https://react.dev/)

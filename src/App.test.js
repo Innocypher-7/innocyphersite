@@ -1,8 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
+import { SITE_TEXT } from './config';
 
-test('renders learn react link', () => {
+test('renders Innocypher brand and hero heading', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  expect(screen.getAllByText(SITE_TEXT.brandName).length).toBeGreaterThan(0);
+  expect(
+    screen.getByRole('heading', {
+      level: 1,
+      name: new RegExp(SITE_TEXT.hero.heading, 'i'),
+    })
+  ).toBeInTheDocument();
 });
