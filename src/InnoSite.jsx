@@ -1,31 +1,28 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
+  NAV_LINKS,
+  SERVICES,
+  PROCESS_STEPS,
+  TECHNOLOGIES,
+  INDUSTRIES,
+  POC_FEATURES,
+  WHY_CHOOSE_US,
+  CONTACT_INFO,
+  SOCIAL_LINKS,
+  SITE_TEXT,
+  LEGAL_TEXT,
+} from "./config";
+import {
   Menu,
   X,
-  Smartphone,
   Globe,
-  Code,
-  Monitor,
   Rocket,
-  Search,
-  PenTool,
   Terminal,
   CheckCircle,
-  Headphones,
   Layout,
   Server,
   Database,
   Cloud,
-  Lightbulb,
-  ShoppingCart,
-  Activity,
-  BookOpen,
-  DollarSign,
-  Truck,
-  Zap,
-  TrendingUp,
-  Handshake,
-  Clock,
   MapPin,
   Mail,
   Phone,
@@ -35,197 +32,7 @@ import {
   Network,
   Wifi,
   Fingerprint,
-  Layers,
-  Lock,
 } from "lucide-react";
-
-// --- DATA ---
-const NAV_LINKS = [
-  { name: "Home", href: "#home" },
-  { name: "About", href: "#about" },
-  { name: "Services", href: "#services" },
-  { name: "Process", href: "#process" },
-  { name: "Contact", href: "#contact" },
-  { name: "Start Project", href: "#contact" },
-];
-
-const SERVICES = [
-  {
-    title: "Mobile App Development",
-    icon: <Smartphone className="w-8 h-8 text-blue-400" />,
-    items: ["Android", "iOS", "Cross-platform solutions"],
-  },
-  {
-    title: "Web Application Development",
-    icon: <Globe className="w-8 h-8 text-purple-400" />,
-    items: ["Business websites", "Admin dashboards", "SaaS platforms"],
-  },
-  {
-    title: "Software Solutions",
-    icon: <Code className="w-8 h-8 text-blue-400" />,
-    items: [
-      "Custom business software",
-      "CRM systems",
-      "ERP systems",
-      "Workflow automation",
-    ],
-  },
-  {
-    title: "System / Desktop Applications",
-    icon: <Monitor className="w-8 h-8 text-purple-400" />,
-    items: ["Windows software", "Automation tools", "Enterprise systems"],
-  },
-  {
-    title: "Technical PoC Development",
-    icon: <Rocket className="w-8 h-8 text-blue-400" />,
-    items: [
-      "Feasibility Analysis",
-      "Rapid Prototyping",
-      "Technical De-risking",
-      "Core Logic Validation",
-    ],
-  },
-];
-
-const PROCESS_STEPS = [
-  {
-    title: "Requirement Analysis",
-    desc: "Understanding business goals",
-    icon: <Search />,
-  },
-  {
-    title: "Planning & Design",
-    desc: "Creating roadmap and UI/UX",
-    icon: <PenTool />,
-  },
-  {
-    title: "Development",
-    desc: "Building with modern technologies",
-    icon: <Terminal />,
-  },
-  {
-    title: "Testing",
-    desc: "Ensuring performance and reliability",
-    icon: <CheckCircle />,
-  },
-  {
-    title: "Launch & Support",
-    desc: "Deployment and ongoing support",
-    icon: <Headphones />,
-  },
-];
-
-const TECHNOLOGIES = [
-  {
-    title: "Frontend Experiences",
-    desc: "Modern and scalable frontend technologies for seamless user experiences.",
-    icon: <Layout className="w-6 h-6" />,
-  },
-  {
-    title: "Backend Systems",
-    desc: "High-performance backend systems built for reliability and speed.",
-    icon: <Server className="w-6 h-6" />,
-  },
-  {
-    title: "Database Architectures",
-    desc: "Secure and optimized database architectures.",
-    icon: <Database className="w-6 h-6" />,
-  },
-  {
-    title: "Mobile Capabilities",
-    desc: "Cross-platform mobile development capabilities.",
-    icon: <Smartphone className="w-6 h-6" />,
-  },
-  {
-    title: "Cloud Infrastructure",
-    desc: "Cloud-based infrastructure ensuring scalability and availability.",
-    icon: <Cloud className="w-6 h-6" />,
-  },
-];
-
-const INDUSTRIES = [
-  {
-    name: "POCs",
-    icon: <Lightbulb className="w-8 h-8 mb-4 text-yellow-400" />,
-  },
-  {
-    name: "E-commerce",
-    icon: <ShoppingCart className="w-8 h-8 mb-4 text-blue-400" />,
-  },
-  {
-    name: "Healthcare",
-    icon: <Activity className="w-8 h-8 mb-4 text-red-400" />,
-  },
-  {
-    name: "Education",
-    icon: <BookOpen className="w-8 h-8 mb-4 text-green-400" />,
-  },
-  {
-    name: "Finance",
-    icon: <DollarSign className="w-8 h-8 mb-4 text-emerald-400" />,
-  },
-  {
-    name: "Logistics",
-    icon: <Truck className="w-8 h-8 mb-4 text-orange-400" />,
-  },
-];
-
-const STARTUP_FEATURES = [
-  {
-    title: "Full-Stack Expertise",
-    desc: "Web, mobile, cloud, and AI all under one roof. No subcontractors, faster execution.",
-    icon: <Layers className="w-6 h-6 text-blue-400" />,
-  },
-  {
-    title: "Cost-Effective Solutions",
-    desc: "Premium quality at 40–50% less than Western agencies. Great value without compromise.",
-    icon: <DollarSign className="w-6 h-6 text-purple-400" />,
-  },
-  {
-    title: "Agile & Fast Delivery",
-    desc: "Rapid prototyping, quick turnarounds, flexible scaling. Your business moves at startup speed.",
-    icon: <Zap className="w-6 h-6 text-blue-400" />,
-  },
-  {
-    title: "Long-Term Partnership",
-    desc: "We grow with you. From MVP to scale, we're invested in your success.",
-    icon: <Handshake className="w-6 h-6 text-purple-400" />,
-  },
-  {
-    title: "Transparent Communication",
-    desc: "Regular updates, clear roadmaps, no hidden surprises. You're always in the loop.",
-    icon: <Headphones className="w-6 h-6 text-blue-400" />,
-  },
-  {
-    title: "Security First Approach",
-    desc: "Data integrity is our priority. We implement industry-standard security protocols to protect your intellectual property and user data from day one.",
-    icon: <Lock className="w-6 h-6 text-purple-400" />,
-  },
-  // { title: 'Proven Track Record', desc: 'Delivered 100+ successful projects. Real results, real growth for our clients.', icon: <TrendingUp className="w-6 h-6 text-purple-400" /> }
-];
-
-const WHY_CHOOSE_US = [
-  {
-    text: "Experienced Team",
-    icon: <Terminal className="w-5 h-5 text-blue-400" />,
-  },
-  {
-    text: "POC Friendly",
-    icon: <Rocket className="w-5 h-5 text-purple-400" />,
-  },
-  {
-    text: "Scalable Solutions",
-    icon: <Layers className="w-5 h-5 text-blue-400" />,
-  },
-  {
-    text: "Affordable Pricing",
-    icon: <DollarSign className="w-5 h-5 text-purple-400" />,
-  },
-  {
-    text: "On-time Delivery",
-    icon: <Clock className="w-5 h-5 text-blue-400" />,
-  },
-];
 
 // --- COMPONENTS ---
 
@@ -399,6 +206,7 @@ const Navbar = () => {
 
 export default function InnoSite() {
   const [formStatus, setFormStatus] = useState("");
+  const [legalModal, setLegalModal] = useState(null); // null | "privacy" | "terms"
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -413,8 +221,8 @@ export default function InnoSite() {
       <style
         dangerouslySetInnerHTML={{
           __html: `
-        html { scroll-behavior: smooth; cursor: crosshair; }
-        a, button, input, textarea, select { cursor: pointer; }
+        html { scroll-behavior: smooth; }
+        a, button { cursor: crosshair; }
         .text-shadow-glow { text-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
       `,
         }}
@@ -447,26 +255,23 @@ export default function InnoSite() {
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
               </span>
               <span className="text-sm font-medium text-slate-300">
-                INNOCYPHER transforms ideas into powerful digital products
+                {SITE_TEXT.hero.badge}
               </span>
             </div>
           </FadeIn>
 
           <FadeIn delay={300}>
             <h1 className="text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-8 leading-tight">
-              Build Smart. Scale Fast. <br className="hidden md:block" />
+              {SITE_TEXT.hero.heading} <br className="hidden md:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-500 animate-pulse">
-                Grow with INNOCYPHER.
+                {SITE_TEXT.hero.headingHighlight}
               </span>
             </h1>
           </FadeIn>
 
           <FadeIn delay={500}>
             <p className="mt-4 max-w-2xl mx-auto text-xl text-slate-400 mb-10">
-              Transform your business with custom web apps, mobile solutions,
-              cloud infrastructure, and AI-powered automation. We deliver
-              results faster, smarter, and more affordable — from simple tools
-              to complex enterprise systems.
+              {SITE_TEXT.hero.description}
             </p>
           </FadeIn>
 
@@ -476,14 +281,14 @@ export default function InnoSite() {
                 href="#contact"
                 className="group w-full sm:w-auto px-8 py-4 rounded-full bg-blue-600 hover:bg-blue-500 text-white font-medium transition-all shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_40px_rgba(37,99,235,0.6)] flex items-center justify-center gap-2 hover:-translate-y-1"
               >
-                Start Your Project Today{" "}
+                {SITE_TEXT.hero.ctaPrimary}
                 <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </a>
               <a
                 href="#services"
                 className="w-full sm:w-auto px-8 py-4 rounded-full bg-slate-900 border border-slate-700 hover:bg-slate-800 hover:border-blue-500/50 text-white font-medium transition-all text-center hover:-translate-y-1"
               >
-                Get a Free Consultation
+                {SITE_TEXT.hero.ctaSecondary}
               </a>
             </div>
           </FadeIn>
@@ -504,15 +309,12 @@ export default function InnoSite() {
                   <Fingerprint className="w-4 h-4" /> Who We Are
                 </h2>
                 <h3 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                  Experienced Engineers who understand real-world business
-                  challenges.
+                  {SITE_TEXT.about.title}
                 </h3>
                 <p className="text-slate-400 text-lg mb-6 leading-relaxed">
-                  We are a specialized software development firm that helps
-                  companies transform complex business logic into scalable
-                  digital products. We build the invisible engine behind modern
-                  businesses—high-performance, secure software and cloud
-                  integrations that scale.
+                  {SITE_TEXT.about.description} We build the invisible engine
+                  behind modern businesses—high-performance, secure software and
+                  cloud integrations that scale.
                 </p>
               </FadeIn>
 
@@ -785,15 +587,15 @@ export default function InnoSite() {
                 ⭐ Why Choose Innocypher?
               </h2>
               <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-                We understand the fast-paced environment of building a Proof of Concept. We act as
-                your technical co-founders, building products that scale as you
-                grow.
+                We understand the fast-paced environment of building a Proof of
+                Concept. We act as your technical co-founders, building products
+                that scale as you grow.
               </p>
             </div>
           </FadeIn>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {STARTUP_FEATURES.map((feature, idx) => (
+            {POC_FEATURES.map((feature, idx) => (
               <FadeIn key={idx} delay={idx * 150} direction="up">
                 <div className="bg-slate-900/80 backdrop-blur-sm border border-slate-800 p-6 rounded-2xl text-center hover:-translate-y-3 hover:border-purple-500/50 hover:shadow-[0_15px_30px_rgba(168,85,247,0.15)] transition-all duration-300 group h-full flex flex-col">
                   <div className="inline-flex p-4 rounded-full bg-slate-950 mb-4 group-hover:bg-purple-900/30 transition-colors group-hover:scale-110 mx-auto">
@@ -872,7 +674,7 @@ export default function InnoSite() {
                     <div>
                       <p className="text-sm text-slate-500">Email Us</p>
                       <p className="text-lg font-medium text-white group-hover:text-blue-300 transition-colors">
-                        contact@innocypher.com
+                        {CONTACT_INFO.email}
                       </p>
                     </div>
                   </div>
@@ -883,7 +685,7 @@ export default function InnoSite() {
                     <div>
                       <p className="text-sm text-slate-500">Call Us</p>
                       <p className="text-lg font-medium text-white group-hover:text-purple-300 transition-colors">
-                        +91 XXXXX XXXXX
+                        {CONTACT_INFO.phone}
                       </p>
                     </div>
                   </div>
@@ -894,7 +696,7 @@ export default function InnoSite() {
                     <div>
                       <p className="text-sm text-slate-500">Location</p>
                       <p className="text-lg font-medium text-white group-hover:text-blue-300 transition-colors">
-                        India
+                        {CONTACT_INFO.location}
                       </p>
                     </div>
                   </div>
@@ -977,6 +779,42 @@ export default function InnoSite() {
         </div>
       </section>
 
+      {/* LEGAL MODAL */}
+      {legalModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4 py-6">
+          <div className="max-w-3xl w-full bg-slate-950 border border-slate-800 rounded-2xl shadow-2xl overflow-auto max-h-[90vh]">
+            <div className="flex justify-between items-center px-5 py-4 border-b border-slate-800">
+              <h3 className="text-xl font-bold text-white">
+                {LEGAL_TEXT[legalModal].title}
+              </h3>
+              <button
+                onClick={() => setLegalModal(null)}
+                className="text-slate-400 hover:text-white"
+                aria-label="Close legal dialog"
+              >
+                ✕
+              </button>
+            </div>
+            <div className="px-5 py-4">
+              <p className="text-slate-400 mb-2">
+                Effective date: {LEGAL_TEXT[legalModal].effectiveDate}
+              </p>
+              <p className="text-slate-300 mb-4">
+                {LEGAL_TEXT[legalModal].overview}
+              </p>
+              {LEGAL_TEXT[legalModal].sections.map((section) => (
+                <div key={section.heading} className="mb-5">
+                  <h4 className="text-lg font-semibold text-white mb-1">
+                    {section.heading}
+                  </h4>
+                  <p className="text-slate-400">{section.content}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* FOOTER */}
       <footer className="bg-slate-950 border-t border-slate-800 pt-16 pb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -994,20 +832,18 @@ export default function InnoSite() {
                 </span>
               </div>
               <p className="text-slate-400 text-sm max-w-sm mb-6">
-                Powering Your Ideas into Reality. <br />
-                We are your trusted partner for high-quality software solutions
-                and digital products.
+                {SITE_TEXT.footer.description}
               </p>
               {/* Social Placeholders */}
               <div className="flex gap-4">
-                {[1, 2, 3, 4].map((i) => (
+                {SOCIAL_LINKS.map((social) => (
                   <a
-                    key={i}
-                    href="#"
+                    key={social.name}
+                    href={social.href}
+                    aria-label={social.name}
                     className="w-10 h-10 rounded-full bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:border-blue-500 hover:bg-slate-800 hover:-translate-y-1 hover:shadow-[0_5px_15px_rgba(59,130,246,0.3)] transition-all"
                   >
-                    <span className="sr-only">Social Link {i}</span>
-                    <Globe className="w-4 h-4" />
+                    {social.icon}
                   </a>
                 ))}
               </div>
@@ -1053,15 +889,26 @@ export default function InnoSite() {
 
           <div className="pt-8 border-t border-slate-800 text-center flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-slate-500 text-sm">
-              © {new Date().getFullYear()} INNOCYPHER. All rights reserved.
+              {SITE_TEXT.footer.copyrightTemplate.replace(
+                "{year}",
+                new Date().getFullYear(),
+              )}
             </p>
             <div className="flex gap-6 text-sm text-slate-500">
-              <a href="#" className="hover:text-white transition-colors">
+              <button
+                type="button"
+                onClick={() => setLegalModal("privacy")}
+                className="hover:text-white transition-colors"
+              >
                 Privacy Policy
-              </a>
-              <a href="#" className="hover:text-white transition-colors">
+              </button>
+              <button
+                type="button"
+                onClick={() => setLegalModal("terms")}
+                className="hover:text-white transition-colors"
+              >
                 Terms of Service
-              </a>
+              </button>
             </div>
           </div>
         </div>
