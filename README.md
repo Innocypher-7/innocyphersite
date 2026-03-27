@@ -37,15 +37,14 @@ Open [http://localhost:3000](http://localhost:3000). The dev server reloads on f
 
 ## Production build and `PUBLIC_URL`
 
-This repo is a **GitHub Pages project site** (live URL is `https://<owner>.github.io/<repo>/` until you attach a custom domain). Create React App must know that base path at **build time**, or asset URLs will be wrong.
+[`package.json`](package.json) sets **`"homepage": "."`**, so production builds use **relative** URLs for CSS, JS, and [`manifest.json`](public/manifest.json). The same build works at **`https://<owner>.github.io/<repo>/`** and at a **custom domain** (e.g. `https://innocypher.com`) without pointing assets at another origin (which triggers [mixed content](https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content) or **CORS** on the manifest when the page is opened on the custom host).
 
-- **CI and deploy workflows** set `PUBLIC_URL` automatically: if the repository variable `PUBLIC_URL` is set, it is used; otherwise the default GitHub Pages URL for this repo is used (`https://<owner>.github.io/<repo>/`).
-- **Custom domain:** set a [GitHub Actions variable](https://docs.github.com/en/actions/learn-github-actions/variables#creating-configuration-variables-for-a-repository) named `PUBLIC_URL` to your canonical site URL, including a trailing slash, for example `https://www.example.com/`. Keep this in sync with the hostname in [`public/CNAME`](public/CNAME) and with **Settings → Pages → Custom domain** for this repository.
+- **CI and deploy** set `PUBLIC_URL` to **`.`** unless you define a repository variable **`PUBLIC_URL`**. If you set it, use **`https://...`** with a trailing slash (never `http://`); workflows rewrite accidental `http://` to `https://`.
 
-Local production checks:
+Optional local build with an absolute public URL:
 
 ```bash
-set PUBLIC_URL=https://your-owner.github.io/your-repo/
+set PUBLIC_URL=https://innocypher.com/
 npm run build
 ```
 
