@@ -28,9 +28,27 @@ jobs:
 
       - run: npm ci
 
+      # Use relative asset URLs (PUBLIC_URL=.) unless vars.PUBLIC_URL overrides, so the same build
+      # works at https://innocypher.com and at https://<org>.github.io/<repo>/ (no cross-origin manifest/CSS).
+      - name: Resolve PUBLIC_URL
+        id: public_url
+        env:
+          CUSTOM_PUBLIC_URL: ${{ vars.PUBLIC_URL }}
+        run: |
+          set -e
+          if [ -n "$CUSTOM_PUBLIC_URL" ]; then
+            u="$CUSTOM_PUBLIC_URL"
+            if [[ "$u" == http://* ]]; then
+              u="https://${u#http://}"
+            fi
+            echo "value=$u" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=." >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Build
         env:
-          PUBLIC_URL: ${{ vars.PUBLIC_URL || format('https://{0}.github.io/{1}/', github.repository_owner, github.event.repository.name) }}
+          PUBLIC_URL: ${{ steps.public_url.outputs.value }}
         run: npm run build
 
       - uses: actions/upload-pages-artifact@v3
