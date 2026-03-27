@@ -2,7 +2,9 @@ name: Deploy GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [master]
+  # Run manually from the Actions tab (useful after merge or to redeploy without a new commit)
+  workflow_dispatch:
 
 permissions:
   contents: read

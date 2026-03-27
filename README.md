@@ -51,10 +51,11 @@ npm run build
 
 1. In the GitHub repository, enable **Settings → Pages**.
 2. Under **Build and deployment**, set **Source** to **GitHub Actions**.
-3. Pushes to `main` run [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml), which builds the site and publishes it with the official Pages actions.
-4. **Custom domain:** add the domain under Pages settings, complete DNS at your registrar (A / CNAME records as required), and enable HTTPS when GitHub allows it. See [Configuring a custom domain for GitHub Pages](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site).
+3. **Workflows live on the branch you push.** Both [CI](.github/workflows/ci.yml) and [deploy](.github/workflows/deploy-pages.yml) are triggered by pushes to **`master`** (and deploy can also be started manually: **Actions → Deploy GitHub Pages → Run workflow**). If your work is on another branch (for example `localsite`), merge it into `master` and push `master` so GitHub sees `.github/workflows/` and runs them.
+4. Pushes to `master` run [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml), which builds the site and publishes it with the official Pages actions.
+5. **Custom domain:** add the domain under Pages settings, complete DNS at your registrar (A / CNAME records as required), and enable HTTPS when GitHub allows it. See [Configuring a custom domain for GitHub Pages](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site).
 
-Pull requests and pushes also run [`.github/workflows/ci.yml`](.github/workflows/ci.yml) (tests + build).
+Pull requests targeting `master` and pushes to `master` also run [`.github/workflows/ci.yml`](.github/workflows/ci.yml) (tests + build).
 
 ## Project layout
 
