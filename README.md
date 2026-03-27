@@ -1,6 +1,10 @@
-# Innocypher — marketing site
+# Innocypher
 
-Static marketing and landing experience for **Innocypher**, built with [Create React App](https://github.com/facebook/create-react-app). Production output is a client-side SPA served as static files from the `build` directory.
+**Build Smart. Scale Fast.** Grow with INNOCYPHER.
+
+INNOCYPHER transforms ideas into powerful digital products. Transform your business with custom web apps, mobile solutions, cloud infrastructure, and AI-powered automation.
+
+This repository is the Innocypher startup website: a client-side SPA built with [Create React App](https://github.com/facebook/create-react-app). Production output goes to the `build` folder. Copy and sections are driven by [`src/config.js`](src/config.js) (`SITE_TEXT` and related exports).
 
 ## Stack
 
