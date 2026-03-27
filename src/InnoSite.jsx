@@ -76,13 +76,13 @@ const SERVICES = [
     items: ["Windows software", "Automation tools", "Enterprise systems"],
   },
   {
-    title: "Startup Development",
+    title: "Technical PoC Development",
     icon: <Rocket className="w-8 h-8 text-blue-400" />,
     items: [
-      "MVP development",
-      "UI/UX design",
-      "Product strategy",
-      "Scaling support",
+      "Feasibility Analysis",
+      "Rapid Prototyping",
+      "Technical De-risking",
+      "Core Logic Validation",
     ],
   },
 ];
@@ -145,7 +145,7 @@ const TECHNOLOGIES = [
 
 const INDUSTRIES = [
   {
-    name: "Startups",
+    name: "POCs",
     icon: <Lightbulb className="w-8 h-8 mb-4 text-yellow-400" />,
   },
   {
@@ -210,7 +210,7 @@ const WHY_CHOOSE_US = [
     icon: <Terminal className="w-5 h-5 text-blue-400" />,
   },
   {
-    text: "Startup Friendly",
+    text: "POC Friendly",
     icon: <Rocket className="w-5 h-5 text-purple-400" />,
   },
   {
@@ -785,7 +785,7 @@ export default function InnoSite() {
                 ⭐ Why Choose Innocypher?
               </h2>
               <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-                We understand the fast-paced environment of startups. We act as
+                We understand the fast-paced environment of building a Proof of Concept. We act as
                 your technical co-founders, building products that scale as you
                 grow.
               </p>
@@ -1045,7 +1045,7 @@ export default function InnoSite() {
                 </li>
                 <br />
                 <li className="hover:text-blue-400 hover:translate-x-1 inline-block cursor-pointer transition-transform">
-                  Startup MVP Dev
+                  POC MVP Dev
                 </li>
               </ul>
             </div>
