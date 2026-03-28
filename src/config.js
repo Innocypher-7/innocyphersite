@@ -132,7 +132,7 @@ export const TECHNOLOGIES = [
 
 export const INDUSTRIES = [
   {
-    name: "POCs",
+    name: "IT",
     icon: <Lightbulb className="w-8 h-8 mb-4 text-yellow-400" />,
   },
   {
