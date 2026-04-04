@@ -7,7 +7,7 @@ const contactRoutes = require("./routes/contact");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
+// Middleware setup
 app.use(
   cors({
     origin: process.env.CORS_ORIGIN || "http://localhost:3000",
