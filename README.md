@@ -12,6 +12,19 @@ This repository is the Innocypher startup website: a client-side SPA built with 
 - Tailwind CSS
 - [lucide-react](https://lucide.dev/) icons
 - [Testing Library](https://testing-library.com/) for smoke tests
+- **Backend**: Node.js + Express + Nodemailer (email service)
+
+## Backend Features
+
+The backend provides email functionality for the contact form:
+
+- SMTP-based email sending
+- HTML email templates with attractive formatting
+- Input validation and sanitization
+- Environment-based configuration
+- CORS support
+
+See [backend/README.md](backend/README.md) for detailed setup instructions.
 
 ## Prerequisites
 
@@ -20,6 +33,8 @@ This repository is the Innocypher startup website: a client-side SPA built with 
 
 ## Local development
 
+### Frontend
+
 ```bash
 npm install
 npm start
@@ -27,13 +42,41 @@ npm start
 
 Open [http://localhost:3000](http://localhost:3000). The dev server reloads on file changes.
 
+### Backend (Email Service)
+
+The contact form requires the backend to send emails.
+
+```bash
+# Install backend dependencies
+npm run install:backend
+
+# Create .env file from template
+cp backend/.env.example backend/.env
+
+# Edit backend/.env with your SMTP credentials (see backend/README.md)
+
+# Run backend server
+npm run dev:backend
+```
+
+Backend runs on `http://localhost:5000` by default.
+
+**Note**: Update `REACT_APP_API_URL` in `src/.env` if backend runs on different port:
+
+```env
+REACT_APP_API_URL=http://localhost:5000/api/contact/send
+```
+
 ## Scripts
 
-| Command | Purpose |
-| --- | --- |
-| `npm start` | Dev server |
-| `npm run build` | Production build → `build/` |
-| `npm test` | Tests (interactive locally; CI uses `--watchAll=false`) |
+| Command                   | Purpose                                                 |
+| ------------------------- | ------------------------------------------------------- |
+| `npm start`               | Dev server (frontend)                                   |
+| `npm run build`           | Production build → `build/`                             |
+| `npm test`                | Tests (interactive locally; CI uses `--watchAll=false`) |
+| `npm run install:backend` | Install backend dependencies                            |
+| `npm run dev:backend`     | Start backend with auto-reload (development)            |
+| `npm run start:backend`   | Start backend server (production)                       |
 
 ## Production build and `PUBLIC_URL`
 

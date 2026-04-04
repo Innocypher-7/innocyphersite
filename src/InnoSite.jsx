@@ -206,13 +206,64 @@ const Navbar = () => {
 
 export default function InnoSite() {
   const [formStatus, setFormStatus] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [legalModal, setLegalModal] = useState(null); // null | "privacy" | "terms"
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
 
-  const handleSubmit = (e) => {
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setFormStatus("Message sent successfully! We will get back to you soon.");
-    e.target.reset();
-    setTimeout(() => setFormStatus(""), 5000);
+    setIsLoading(true);
+    setFormStatus("");
+
+    try {
+      const response = await fetch(
+        process.env.REACT_APP_API_URL || "http://localhost:5000",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            subject: "Website Inquiry",
+            message: formData.message,
+          }),
+        }
+      ).then((res) => res.json());
+
+      if (response.success) {
+        setFormStatus(
+          "✓ Message sent successfully! We will get back to you soon."
+        );
+        setFormData({ name: "", email: "", message: "" });
+        e.target.reset?.();
+      } else {
+        setFormStatus(
+          response.message || "Failed to send message. Please try again."
+        );
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
+      setFormStatus(
+        "Error sending message. Please check your connection and try again."
+      );
+    } finally {
+      setIsLoading(false);
+      setTimeout(() => setFormStatus(""), 6000);
+    }
   };
 
   return (
@@ -725,6 +776,8 @@ export default function InnoSite() {
                       required
                       type="text"
                       id="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
                       className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all hover:bg-slate-800"
                       placeholder="John Doe"
                     />
@@ -740,6 +793,8 @@ export default function InnoSite() {
                       required
                       type="email"
                       id="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
                       className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all hover:bg-slate-800"
                       placeholder="john@example.com"
                     />
@@ -754,6 +809,8 @@ export default function InnoSite() {
                     <textarea
                       required
                       id="message"
+                      value={formData.message}
+                      onChange={handleInputChange}
                       rows="4"
                       className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none hover:bg-slate-800"
                       placeholder="Tell us about your project..."
@@ -761,13 +818,29 @@ export default function InnoSite() {
                   </div>
                   <button
                     type="submit"
-                    className="w-full py-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium transition-all shadow-lg shadow-blue-500/25 hover:shadow-blue-500/50 flex justify-center items-center gap-2 hover:-translate-y-1"
+                    disabled={isLoading}
+                    className="w-full py-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium transition-all shadow-lg shadow-blue-500/25 hover:shadow-blue-500/50 flex justify-center items-center gap-2 hover:-translate-y-1 disabled:opacity-70 disabled:cursor-not-allowed"
                   >
-                    Send Message <ChevronRight className="w-4 h-4" />
+                    {isLoading ? (
+                      <>
+                        <span className="inline-block animate-spin">⚙️</span>
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        Send Message <ChevronRight className="w-4 h-4" />
+                      </>
+                    )}
                   </button>
                   {formStatus && (
                     <div className="animate-in fade-in slide-in-from-bottom-2">
-                      <p className="text-green-400 text-sm text-center mt-4 bg-green-500/10 py-2 rounded-lg border border-green-500/20">
+                      <p
+                        className={`text-sm text-center mt-4 py-3 rounded-lg border transition-all ${
+                          formStatus.includes("successfully")
+                            ? "bg-green-500/10 text-green-400 border-green-500/30"
+                            : "bg-red-500/10 text-red-400 border-red-500/30"
+                        }`}
+                      >
                         {formStatus}
                       </p>
                     </div>
