@@ -279,6 +279,73 @@ const sendContactEmail = async (name, email, subject, message) => {
   }
 };
 
+// Generate HTML auto-reply template
+const generateAutoReplyTemplate = (name) => {
+  return `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Thank You for Contacting Us</title>
+      <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); padding: 40px 20px; border-radius: 12px; }
+        .header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid rgba(59, 130, 246, 0.5); padding-bottom: 20px; }
+        .header h1 { color: #3b82f6; font-size: 28px; margin-bottom: 10px; text-shadow: 0 0 10px rgba(59, 130, 246, 0.3); }
+        .content { background: rgba(30, 41, 59, 0.8); padding: 30px; border-radius: 8px; border-left: 4px solid #3b82f6; margin-bottom: 20px; color: #e2e8f0; }
+        .footer { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid rgba(59, 130, 246, 0.2); color: #64748b; font-size: 12px; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <!-- Header -->
+        <div class="header">
+          <h1>Thank You!</h1>
+        </div>
+        <!-- Main Content -->
+        <div class="content">
+          <p style="font-size: 16px; margin-bottom: 20px; font-weight: 500;">Hi ${name},</p>
+          <p>We've received your message and wanted to let you know that our team is looking into it. We will get back to you as soon as possible.</p>
+          <br/>
+          <p>Best regards,<br/><strong>The Innocypher Team</strong></p>
+        </div>
+        <!-- Footer -->
+        <div class="footer">
+          <p>© ${new Date().getFullYear()} Innocypher. All rights reserved.</p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+};
+
+// Send auto-reply function
+const sendAutoReplyEmail = async (name, email) => {
+  try {
+    const transporter = createTransporter();
+    const fromEmail = process.env.FROM_MAIL;
+
+    const mailOptions = {
+      from: `"Innocypher Team" <${fromEmail}>`,
+      to: email,
+      subject: "Thank you for contacting Innocypher",
+      html: generateAutoReplyTemplate(name),
+      text: `Hi ${name},\n\nWe've received your message and wanted to let you know that our team is looking into it. We will get back to you as soon as possible.\n\nBest regards,\nThe Innocypher Team`,
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Auto-reply sent successfully:", info.messageId);
+    return true;
+  } catch (error) {
+    console.error("Error sending auto-reply:", error);
+    // Don't throw error to avoid breaking the main contact flow
+    return false;
+  }
+};
+
 module.exports = {
   sendContactEmail,
+  sendAutoReplyEmail,
 };

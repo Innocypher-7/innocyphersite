@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { sendContactEmail } = require("../services/emailService");
+const { sendContactEmail, sendAutoReplyEmail } = require("../services/emailService");
 
 // Validation middleware
 const validateContactForm = (req, res, next) => {
@@ -59,13 +59,16 @@ router.post("/send", validateContactForm, async (req, res) => {
     const sanitizedSubject = subject.trim();
     const sanitizedMessage = message.trim();
 
-    // Send email
+    // Send email to admin
     const result = await sendContactEmail(
       sanitizedName,
       sanitizedEmail,
       sanitizedSubject,
       sanitizedMessage,
     );
+
+    // Send auto-reply to the user
+    await sendAutoReplyEmail(sanitizedName, sanitizedEmail);
 
     res.status(200).json({
       success: true,

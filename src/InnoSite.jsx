@@ -229,7 +229,7 @@ export default function InnoSite() {
 
     try {
       const response = await fetch(
-        process.env.REACT_APP_API_URL || "http://localhost:5000",
+        `${process.env.REACT_APP_API_URL || "http://localhost:5000"}/api/contact/send`,
         {
           method: "POST",
           headers: {
